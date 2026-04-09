@@ -1,33 +1,25 @@
 
 
-## Panel Session 改为侧边 Drawer
+## 卡片点击引导提示
+
+### 问题
+卡片虽然有 `cursor-pointer` 和 hover 上浮效果，但缺少明确的文字/图标提示，用户不一定知道可以点击查看详情。
 
 ### 方案
 
-将展开详情从"卡片内原地展开"改为**右侧抽屉（Drawer）**，点击卡片后从屏幕右侧滑出详情面板，卡片布局完全不受影响。
+在卡片底部（posts 数量旁边），添加一个**右箭头图标 + "Explore" 文字**，hover 时箭头右移，保持杂志风格的克制感：
 
-### 视觉设计
-- Drawer 宽度约 **420px**，从右侧滑入，带半透明遮罩层
-- 保持毛玻璃质感 + 杂志排版风格，与卡片风格一致
-- 顶部显示 **Persona Name + 描述**（呼应卡片信息）
-- 下方依次展示 3 个区块（Who They Are / Brand Relationship / Consumer Voices）
-- 内容可滚动，Drawer 固定高度为视口高度
+```text
+1,243 posts                    Explore →
+```
+
+- 文字样式：与 posts 一致的 `text-[10px]` 大写微字 + 宽字距
+- 箭头：`ArrowRight` 图标，12px，hover 时 `translate-x-1` 过渡
+- 默认状态透明度较低（`opacity-0`），hover 卡片时淡入（`group-hover:opacity-100`），保持静态时的干净感
 
 ### 改动范围
-
 1. **PersonaCard.tsx**：
-   - 移除卡片内的展开逻辑（grid-rows 动画、ChevronDown 旋转）
-   - 改为点击时调用回调 `onSelect(personaData)`，将数据传递给父组件
-   - 卡片恢复为纯展示卡片，不再有 `isExpanded` 状态
-
-2. **新建 PersonaDrawer.tsx**：
-   - 使用 Shadcn `Sheet` 组件（已有），从右侧滑出
-   - 接收完整的 persona 数据（name、description、expandedData）
-   - 渲染 SectionHeader、BarChart、QuoteCard 等子组件（从 PersonaCard 迁移出来）
-   - 保持相同的杂志排版风格
-
-3. **Index.tsx**：
-   - 新增 `selectedPersona` state
-   - 点击卡片时设置 `selectedPersona`，打开 Drawer
-   - 关闭 Drawer 时清空选中状态
+   - 引入 `ArrowRight` from lucide-react
+   - 在底部 `mt-6 flex justify-between` 区域右侧添加 Explore + 箭头
+   - 利用已有的 `group` class 实现 hover 显现动画
 
