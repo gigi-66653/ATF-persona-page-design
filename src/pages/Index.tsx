@@ -107,9 +107,22 @@ const Index = () => {
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {demoPersonas.map((persona) => (
-            <PersonaCard key={persona.name} {...persona} />
-          ))}
+          {(() => {
+            const remainder = demoPersonas.length % 3;
+            const placeholders = remainder === 0 ? 0 : 3 - remainder;
+            const items: React.ReactNode[] = [];
+            // Insert empty placeholders before the last incomplete row
+            const insertAt = demoPersonas.length - remainder;
+            demoPersonas.forEach((persona, i) => {
+              if (remainder > 0 && i === insertAt) {
+                for (let p = 0; p < placeholders; p++) {
+                  items.push(<div key={`placeholder-${p}`} className="hidden lg:block" />);
+                }
+              }
+              items.push(<PersonaCard key={persona.name} {...persona} />);
+            });
+            return items;
+          })()}
         </div>
       </div>
     </div>
