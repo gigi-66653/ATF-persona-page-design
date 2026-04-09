@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PersonaCard from "@/components/PersonaCard";
+import PersonaDrawer from "@/components/PersonaDrawer";
 import TopNav from "@/components/TopNav";
 import StepIndicator from "@/components/StepIndicator";
 import type { PersonaData } from "@/components/PersonaCard";
@@ -156,8 +158,14 @@ const demoPersonas: PersonaData[] = [
 
 const Index = () => {
   const navigate = useNavigate();
+  const [drawerPersona, setDrawerPersona] = useState<PersonaData | null>(null);
+
   const handleSelect = (persona: PersonaData) => {
     navigate("/hypothesis", { state: { personaName: persona.name } });
+  };
+
+  const handleExplore = (persona: PersonaData) => {
+    setDrawerPersona(persona);
   };
 
   return (
@@ -198,6 +206,7 @@ const Index = () => {
                   key={persona.name}
                   {...persona}
                   onSelect={handleSelect}
+                  onExplore={handleExplore}
                 />
               );
             });
@@ -206,6 +215,11 @@ const Index = () => {
         </div>
       </div>
 
+      <PersonaDrawer
+        persona={drawerPersona}
+        open={!!drawerPersona}
+        onClose={() => setDrawerPersona(null)}
+      />
     </div>
   );
 };
