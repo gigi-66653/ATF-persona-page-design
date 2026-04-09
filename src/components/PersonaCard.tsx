@@ -62,7 +62,6 @@ const PersonaCard = ({
         <p className="text-[10px] font-medium uppercase tracking-widest leading-relaxed text-muted-foreground">
           {coreDimensions.join("  ·  ")}
         </p>
-        </div>
 
         {/* Ultra-thin divider */}
         <div className="my-6 h-px bg-border/40" />
