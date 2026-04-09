@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
 export interface BarItem {
   label: string;
@@ -99,6 +100,10 @@ const PersonaCard = ({
         <div className="mt-6 flex items-center justify-between">
           <span className="text-[10px] font-medium uppercase tracking-ultra-wide text-muted-foreground/60">
             {postsCount.toLocaleString()} posts
+          </span>
+          <span className="flex items-center gap-1 text-[10px] font-medium uppercase tracking-widest text-primary/60 opacity-0 transition-all duration-300 group-hover:opacity-100">
+            Explore
+            <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
           </span>
         </div>
       </div>
