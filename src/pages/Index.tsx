@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PersonaCard from "@/components/PersonaCard";
-import TopNav from "@/components/TopNav";
+import PersonaDrawer from "@/components/PersonaDrawer";
 import StepIndicator from "@/components/StepIndicator";
 import type { PersonaData } from "@/components/PersonaCard";
 import { Target, Shield } from "lucide-react";
