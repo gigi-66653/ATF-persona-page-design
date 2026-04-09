@@ -24,7 +24,7 @@ const suggestedConcepts = [
 const HypothesisInput = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const persona = location.state?.persona;
+  const personaName = location.state?.personaName as string | undefined;
 
   const [hypothesis, setHypothesis] = useState("");
   const [conceptInput, setConceptInput] = useState("");
