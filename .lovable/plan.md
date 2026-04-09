@@ -1,21 +1,21 @@
 
 
-## 卡片点击引导 — 始终可见方案
+## Panel Drawer 宽度优化
 
-### 问题
-"Explore →" 仅 hover 时才出现，用户在静态页面上完全没有视觉线索知道卡片可点击。
+### 分析
 
-### 推荐方案：始终显示，hover 时增强
+用户屏幕宽度 1336px，当前 Drawer 420px（约 31%）。内容密集，进度条和引用文字排版局促。
 
-将 "Explore →" 改为**默认可见但低调**，hover 时**变亮 + 箭头右移**：
+### 方案
 
-- 默认状态：`opacity-40`（淡灰色，低调但可读）
-- Hover 状态：`opacity-100` + 箭头 `translate-x-1`（变亮，暗示交互）
+将宽度从 **420px → 540px**（约 40% 屏幕），同时放宽 Sheet 组件的 `sm:max-w-sm` 限制。
 
-这样既保持杂志排版的克制感，又让用户一眼就知道"这里有更多内容可以看"。
+- 540px 让进度条有足够长度展示差异
+- 引用文字不会过度换行
+- 背景卡片仍可见约 60%，保持空间层次感
 
 ### 改动
-**PersonaCard.tsx** 第 104 行：
-- `opacity-0 group-hover:opacity-100` → `opacity-40 group-hover:opacity-100`
-- 一行改动，效果立竿见影
+
+1. **PersonaDrawer.tsx**：`w-[420px]` → `w-[540px]`
+2. **sheet.tsx**：右侧变体的 `sm:max-w-sm`（384px 限制）→ 移除或改为 `sm:max-w-xl`，否则 540px 会被截断
 
