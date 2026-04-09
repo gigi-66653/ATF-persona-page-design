@@ -1,34 +1,29 @@
 
 
-## 卡片品牌维度统一为 Driver + Trust
+## Add Top Navigation + Step Indicator (All English)
 
-### 方案
+### Overview
+Add two new sections above the Persona Gallery: a dark navigation bar and a step progress indicator. All text will be in **English** (the screenshot had Chinese — we'll translate everything).
 
-将 5 张卡片的 `brandRelations` 统一为两个固定维度：
-- **DRIVER**（Purchase Driver）— 图标改为 `Target`（靶心，暗示购买驱动力）
-- **TRUST**（Trust Anchor）— 图标保持 `Shield`（盾牌，信任感）
+### Components
 
-每张卡片的 `value` 文案保持不同（体现各 Persona 差异），只是 label 和 icon 统一。
+**1. `src/components/TopNav.tsx`** — Dark header bar
+- Left: Logo icon + "Virtual Persona" (Playfair Display serif) + subtitle "Hypothesis Validation Platform"
+- Right: Navigation links — "VALIDATION HISTORY", "PROXY LIBRARY", "DOCS" (uppercase, wide letter-spacing, magazine style)
 
-### 图标选择建议
-- `Target`（lucide-react）：精准、驱动力，比 ShoppingBag 更抽象高级，符合杂志风
-- `Shield`：已在用，信任感直观
+**2. `src/components/StepIndicator.tsx`** — Three-step flow
+- Step 1: "Persona Scope" — subtitle "Select target personas" (current/active)
+- Step 2: "Hypothesis Input" — subtitle "Define your hypothesis"
+- Step 3: "Validation Output" — subtitle "Review validation results"
+- Active step: solid dot + bold text; future steps: hollow dot + muted text; thin line connectors between steps
 
-### 改动
+**3. `src/pages/Index.tsx`** — Integration
+- Import and place TopNav + StepIndicator at top
+- Remove or simplify existing "Persona Gallery" header (redundant with step indicator)
+- Adjust top padding
 
-**src/pages/Index.tsx**：
-- import 改为 `Target, Shield`（移除 Heart, Star, TrendingUp）
-- 5 张卡片的 `brandRelations` 统一格式：
-  ```
-  { label: "Driver", value: "...", icon: <Target /> }
-  { label: "Trust", value: "...", icon: <Shield /> }
-  ```
-- 各卡片 value 示例：
-  1. Mindful Explorer — Driver: "Values-aligned quality" / Trust: "Brand philosophy advocate"
-  2. Social Connector — Driver: "Peer validation & trends" / Trust: "Community-endorsed"
-  3. Pragmatic Optimizer — Driver: "Price-performance ratio" / Trust: "Data & reviews backed"
-  4. Trend Chaser — Driver: "Novelty & exclusivity" / Trust: "KOL-validated"
-  5. Silent Loyalist — Driver: "Consistency & habit" / Trust: "Deep experience-based"
-
-仅改 Index.tsx 一个文件，PersonaCard 组件无需修改。
+### Design Notes
+- NavBar: dark background matching the sheet overlay aesthetic; links use the same uppercase tracking style as card labels
+- StepIndicator: light/white background, minimalist typography consistent with card design system
+- All text English per project language rule
 
