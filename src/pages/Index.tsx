@@ -53,8 +53,41 @@ const demoPersonas = [
       { label: "Conversion", value: "★★★☆☆" },
     ],
   },
+  {
+    name: "The Trend Chaser",
+    description:
+      "Early adopters obsessed with what's next. They follow cultural shifts closely and are first to try new products, driven by novelty and status.",
+    coreDimensions: ["Trend-Forward", "Status-Seeking", "Early Adopter"] as [string, string, string],
+    brandRelations: [
+      { label: "Loyalty", value: "Low — Novelty-driven", icon: <Heart className="h-3.5 w-3.5" /> },
+      { label: "Influence", value: "Trendsetter", icon: <TrendingUp className="h-3.5 w-3.5" /> },
+    ],
+    postsCount: 2104,
+    expandedDetails: [
+      { label: "Avg. Engagement", value: "10.1%" },
+      { label: "Content Pref.", value: "Reels & Stories" },
+      { label: "Peak Hours", value: "6–9 PM" },
+      { label: "Conversion", value: "★★★★☆" },
+    ],
+  },
+  {
+    name: "The Quiet Loyalist",
+    description:
+      "Low-profile but deeply committed consumers who rarely post but purchase consistently. Their lifetime value far exceeds their social visibility.",
+    coreDimensions: ["High LTV", "Low Visibility", "Brand-Committed"] as [string, string, string],
+    brandRelations: [
+      { label: "Loyalty", value: "Very High — Silent buyer", icon: <Heart className="h-3.5 w-3.5" /> },
+      { label: "Retention", value: "Organic repeat", icon: <Shield className="h-3.5 w-3.5" /> },
+    ],
+    postsCount: 187,
+    expandedDetails: [
+      { label: "Avg. Engagement", value: "1.8%" },
+      { label: "Content Pref.", value: "Email & DM" },
+      { label: "Peak Hours", value: "9–11 AM" },
+      { label: "Conversion", value: "★★★★★" },
+    ],
+  },
 ];
-
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -74,9 +107,22 @@ const Index = () => {
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {demoPersonas.map((persona) => (
-            <PersonaCard key={persona.name} {...persona} />
-          ))}
+          {(() => {
+            const remainder = demoPersonas.length % 3;
+            const placeholders = remainder === 0 ? 0 : 3 - remainder;
+            const items: React.ReactNode[] = [];
+            // Insert empty placeholders before the last incomplete row
+            const insertAt = demoPersonas.length - remainder;
+            demoPersonas.forEach((persona, i) => {
+              if (remainder > 0 && i === insertAt) {
+                for (let p = 0; p < placeholders; p++) {
+                  items.push(<div key={`placeholder-${p}`} className="hidden lg:block" />);
+                }
+              }
+              items.push(<PersonaCard key={persona.name} {...persona} />);
+            });
+            return items;
+          })()}
         </div>
       </div>
     </div>
