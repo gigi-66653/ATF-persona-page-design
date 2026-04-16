@@ -1,10 +1,8 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import { ArrowRight } from "lucide-react";
 
 interface ActivationDirectionProps {
-  onExportBrief?: (directionTitle: string) => void;
+  onExportBrief: (directionTitle: string) => void;
 }
 
 /* ── Mock Data ── */
@@ -85,9 +83,7 @@ const DimensionChip = ({ label }: { label: string }) => (
   </span>
 );
 
-const ActivationDirection = () => {
-  const { toast } = useToast();
-
+const ActivationDirection = ({ onExportBrief }: ActivationDirectionProps) => {
   return (
     <section>
       <h2 className="mb-8 font-serif text-2xl font-semibold tracking-tight text-foreground">
@@ -178,25 +174,19 @@ const ActivationDirection = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Export Brief button */}
+              <div className="mt-5 border-t border-border/40 pt-4">
+                <button
+                  onClick={() => onExportBrief(d.title)}
+                  className="flex items-center gap-1.5 text-[12px] font-medium text-primary transition-colors hover:text-primary/80"
+                >
+                  Export Brief <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              </div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Export Button */}
-      <div className="flex justify-end">
-        <Button
-          className="h-12 px-6 text-sm font-medium uppercase tracking-[0.12em]"
-          onClick={() =>
-            toast({
-              title: "Coming Soon",
-              description: "Creative Brief export will be available in the production version",
-            })
-          }
-        >
-          <Download className="mr-2 h-4 w-4" />
-          Export Creative Brief
-        </Button>
       </div>
     </section>
   );

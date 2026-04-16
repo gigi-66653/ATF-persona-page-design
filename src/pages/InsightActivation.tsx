@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import TopNav from "@/components/TopNav";
 import StepIndicator from "@/components/StepIndicator";
@@ -5,13 +6,32 @@ import ContextBar from "@/components/insight/ContextBar";
 import FiveCAnalysis from "@/components/insight/FiveCAnalysis";
 import ActivationDirection from "@/components/insight/ActivationDirection";
 import InsightChatbot from "@/components/insight/InsightChatbot";
+import CreativeBriefPanel from "@/components/insight/CreativeBriefPanel";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+type ActivePanel = "none" | "chatbot" | "brief";
 
 const InsightActivation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const personaName = (location.state as any)?.personaName as string | undefined;
+
+  const [activePanel, setActivePanel] = useState<ActivePanel>("none");
+  const [briefDirection, setBriefDirection] = useState("");
+
+  const handleOpenBrief = (directionTitle: string) => {
+    setBriefDirection(directionTitle);
+    setActivePanel("brief");
+  };
+
+  const handleChatbotToggle = (open: boolean) => {
+    setActivePanel(open ? "chatbot" : "none");
+  };
+
+  const handleCloseBrief = () => {
+    setActivePanel("none");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -45,10 +65,19 @@ const InsightActivation = () => {
 
         <div className="my-10 h-px bg-border/60" />
 
-        <ActivationDirection />
+        <ActivationDirection onExportBrief={handleOpenBrief} />
       </div>
 
-      <InsightChatbot />
+      <InsightChatbot
+        open={activePanel === "chatbot"}
+        onToggle={handleChatbotToggle}
+      />
+
+      <CreativeBriefPanel
+        open={activePanel === "brief"}
+        directionTitle={briefDirection}
+        onClose={handleCloseBrief}
+      />
     </div>
   );
 };
