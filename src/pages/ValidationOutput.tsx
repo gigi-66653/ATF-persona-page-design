@@ -368,9 +368,12 @@ const ValidationOutput = () => {
           </div>
         </section>
 
+        {/* ── Divider ── */}
+        <div className="my-10 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
         {/* ── Unlock Insight Activation ── */}
         <Button
-          className="mb-10 h-14 w-full bg-primary text-primary-foreground text-sm font-medium uppercase tracking-[0.15em] hover:bg-primary/90"
+          className="mb-16 h-14 w-full bg-primary text-primary-foreground text-sm font-medium uppercase tracking-[0.15em] hover:bg-primary/90 shadow-lg shadow-primary/20"
           onClick={() =>
             navigate("/activation", {
               state: { personaName },
