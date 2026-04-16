@@ -85,7 +85,7 @@ const CreativeBriefPanel = ({ open, directionTitle, onClose }: CreativeBriefPane
           {/* THE INSIGHT */}
           <section>
             <SectionTitle>The Insight</SectionTitle>
-            <SourceLabel>Consumer C · Persona definition + Page 3 verification + original posts</SourceLabel>
+            <SourceLabel>Consumer research &amp; social listening</SourceLabel>
             <div className="space-y-4 text-sm leading-relaxed text-foreground/85">
               <p>
                 Medical authority is the dominant trust driver for first-time mothers navigating the breast-to-formula transition in DACH — but it's not enough on its own. Mothers consistently seek a second layer of validation from peers before they feel confident in their choice. As one mother put it: <em className="text-foreground/75">"My pediatrician said Aptamil is fine, but I still needed to read what other moms experienced before I felt okay giving it."</em> This dual-trust dynamic — clinical endorsement first, then peer confirmation — plays out most intensely during late-night feeding sessions and the first weeks post-discharge, when anxiety peaks and forums become the go-to source of reassurance: <em className="text-foreground/75">"I trust the science, but the forums are where I go to feel less alone at 3am."</em>
@@ -99,7 +99,7 @@ const CreativeBriefPanel = ({ open, directionTitle, onClose }: CreativeBriefPane
           {/* 5C CONTEXT */}
           <section>
             <SectionTitle>5C Context</SectionTitle>
-            <SourceLabel>Culture (P7a) · Category (P7b) · Connection (P7c) · Company (P7d)</SourceLabel>
+            <SourceLabel>Market &amp; cultural research, competitive analysis, channel data, brand audit</SourceLabel>
             <div className="space-y-4 text-sm leading-relaxed text-foreground/85">
               <p>
                 <strong className="text-foreground">Culture:</strong> The DACH region is seeing a rise in "informed motherhood" — mothers expect scientific backing but reject paternalistic messaging. Medical expertise is respected yet increasingly questioned when it conflicts with lived peer experience. "Doctor says X but my baby…" is a recurring narrative pattern across parenting communities.
@@ -119,7 +119,7 @@ const CreativeBriefPanel = ({ open, directionTitle, onClose }: CreativeBriefPane
           {/* THE DIRECTION */}
           <section>
             <SectionTitle>The Direction</SectionTitle>
-            <SourceLabel>Activation Direction Module (P8) · 5C synthesis</SourceLabel>
+            <SourceLabel>Strategic analysis across all 5C dimensions</SourceLabel>
             <div className="space-y-4 text-sm leading-relaxed text-foreground/85">
               <div>
                 <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60">Communication Lead</p>
