@@ -11,11 +11,11 @@ import {
   BarChart3,
   ShieldAlert,
   AlertTriangle,
-  Lightbulb,
   PenLine,
-  Send,
   Sparkles,
   ArrowRight,
+  FileText,
+  Quote,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
