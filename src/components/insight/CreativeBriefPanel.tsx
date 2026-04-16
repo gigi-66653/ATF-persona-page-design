@@ -1,4 +1,5 @@
-import { X, FileText, Download } from "lucide-react";
+import { useState } from "react";
+import { X, FileText, Download, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
@@ -21,12 +22,9 @@ const SourceLabel = ({ children }: { children: React.ReactNode }) => (
   <p className="mb-4 text-[11px] italic text-muted-foreground/60">Source: {children}</p>
 );
 
-const BriefQuote = ({ text }: { text: string }) => (
-  <p className="text-[13px] italic leading-relaxed text-foreground/75">"{text}"</p>
-);
-
 const CreativeBriefPanel = ({ open, directionTitle, onClose }: CreativeBriefPanelProps) => {
   const { toast } = useToast();
+  const [sourcesOpen, setSourcesOpen] = useState(false);
   const today = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
   const handleDownload = () => {
@@ -60,7 +58,7 @@ const CreativeBriefPanel = ({ open, directionTitle, onClose }: CreativeBriefPane
               <div>
                 <h2 className="text-base font-bold text-foreground">Creative Brief</h2>
                 <p className="mt-0.5 font-serif text-sm italic text-foreground/70">"{directionTitle}"</p>
-                <p className="mt-1 text-[11px] text-muted-foreground/50">Generated {today}</p>
+                <p className="mt-1 text-[11px] text-muted-foreground/50">The Cautious First-Timer · {today}</p>
               </div>
             </div>
             <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
@@ -84,197 +82,92 @@ const CreativeBriefPanel = ({ open, directionTitle, onClose }: CreativeBriefPane
 
         {/* Brief body */}
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
-          {/* Section 1: Context */}
+          {/* THE INSIGHT */}
           <section>
-            <SectionTitle>Context</SectionTitle>
-            <SourceLabel>Page 3 Context + Activation Seed</SourceLabel>
-            <div className="space-y-2 text-sm leading-relaxed text-foreground/85">
-              <div className="flex gap-2"><span className="font-semibold text-foreground/60 w-28 shrink-0">Persona</span><span>The Cautious First-Timer</span></div>
-              <div className="flex gap-2"><span className="font-semibold text-foreground/60 w-28 shrink-0">Hypothesis</span><span>First-time mothers in the DACH region rely on medical authority as their primary trust anchor when selecting infant formula, creating a tension between clinical validation and peer community influence</span></div>
-              <div className="flex gap-2"><span className="font-semibold text-foreground/60 w-28 shrink-0">Verdict</span><span>Validated (Strong)</span></div>
-              <div className="flex gap-2"><span className="font-semibold text-foreground/60 w-28 shrink-0">Activation Seed</span><span>Validated hypothesis — strong alignment across consumer signals and cultural patterns</span></div>
-              <div className="flex gap-2"><span className="font-semibold text-foreground/60 w-28 shrink-0">Direction</span><span>"{directionTitle}"</span></div>
-              <div className="flex gap-2"><span className="font-semibold text-foreground/60 w-28 shrink-0">Report ID</span><span>VP-ACT-2026-0416-D1</span></div>
+            <SectionTitle>The Insight</SectionTitle>
+            <SourceLabel>Consumer C · Persona definition + Page 3 verification + original posts</SourceLabel>
+            <div className="space-y-4 text-sm leading-relaxed text-foreground/85">
+              <p>
+                Medical authority is the dominant trust driver for first-time mothers navigating the breast-to-formula transition in DACH — but it's not enough on its own. Mothers consistently seek a second layer of validation from peers before they feel confident in their choice. As one mother put it: <em className="text-foreground/75">"My pediatrician said Aptamil is fine, but I still needed to read what other moms experienced before I felt okay giving it."</em> This dual-trust dynamic — clinical endorsement first, then peer confirmation — plays out most intensely during late-night feeding sessions and the first weeks post-discharge, when anxiety peaks and forums become the go-to source of reassurance: <em className="text-foreground/75">"I trust the science, but the forums are where I go to feel less alone at 3am."</em>
+              </p>
+              <p>
+                The unmet need is clear: there is no trustworthy bridge between clinical recommendation and peer confirmation. Mothers want transition guidance that feels both medically endorsed and emotionally supportive — and no brand currently provides that in a unified way.
+              </p>
             </div>
           </section>
 
-          {/* Section 2: Audience Insight */}
+          {/* 5C CONTEXT */}
           <section>
-            <SectionTitle>Audience Insight</SectionTitle>
-            <SourceLabel>Consumer C · Persona definition, Page 3 verification, original posts</SourceLabel>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Target Audience</h4>
-            <p className="mb-4 text-sm leading-relaxed text-foreground/80">
-              The Cautious First-Timer: A high-anxiety first-time mother in early infancy (0–6M), navigating the breast-to-formula transition. Guided by medical authority, validated through peer experience. Primary driver: scientific credibility. Trust anchor: pediatrician endorsement.
-            </p>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Verified Insight</h4>
-            <p className="mb-1 text-sm leading-relaxed text-foreground/80">
-              Medical authority is the dominant trust driver, but it is insufficient on its own — mothers actively seek peer validation to confirm clinical recommendations. This dual-trust dynamic is consistent across DACH markets with regional intensity variations.
-            </p>
-            <ul className="mb-4 space-y-1 text-sm text-foreground/70">
-              <li>• Verdict: Validated (Strong)</li>
-              <li>• Confidence: High</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Key Signals</h4>
-            <ul className="mb-4 space-y-1 text-sm text-foreground/80">
-              <li>• 78% of posts mentioning formula transition reference a healthcare professional</li>
-              <li>• Peer experience threads receive 3.2× more engagement than brand content</li>
-              <li>• "My pediatrician recommended…" is the most common trust-opening phrase in formula discussions</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Consumer Voices</h4>
-            <div className="mb-4 space-y-2">
-              <BriefQuote text="My pediatrician said Aptamil is fine, but I still needed to read what other moms experienced before I felt okay giving it." />
-              <BriefQuote text="I trust the science, but the forums are where I go to feel less alone at 3am." />
-              <BriefQuote text="When three moms in my group said the same thing my doctor said, that's when I actually believed it." />
+            <SectionTitle>5C Context</SectionTitle>
+            <SourceLabel>Culture (P7a) · Category (P7b) · Connection (P7c) · Company (P7d)</SourceLabel>
+            <div className="space-y-4 text-sm leading-relaxed text-foreground/85">
+              <p>
+                <strong className="text-foreground">Culture:</strong> The DACH region is seeing a rise in "informed motherhood" — mothers expect scientific backing but reject paternalistic messaging. Medical expertise is respected yet increasingly questioned when it conflicts with lived peer experience. "Doctor says X but my baby…" is a recurring narrative pattern across parenting communities.
+              </p>
+              <p>
+                <strong className="text-foreground">Category:</strong> HiPP dominates organic/natural positioning; Nestlé NAN leads clinical/medical messaging. No major brand currently owns the territory between medical authority and peer trust. The category is shifting from pure ingredient-led messaging toward emotional reassurance, opening a whitespace for "science + community" as a unified positioning.
+              </p>
+              <p>
+                <strong className="text-foreground">Connection:</strong> Highest engagement happens on parenting forums (Urbia.de, NetMoms) and Instagram parenting accounts. Long-form personal stories outperform product-led content 4:1, and video testimonials from real mothers drive the highest trust scores. The influence chain runs: pediatricians as trigger → peer mothers as validators → parenting influencers as amplifiers.
+              </p>
+              <p>
+                <strong className="text-foreground">Company:</strong> Aptamil positions itself as the science-led brand with "closest to breast milk" as its core claim. Key assets include Pronutra+ (scientific credibility anchor), 50+ years of breast milk research, and an existing HCP recommendation network. However, the current brand portfolio has no active peer/community-building initiative — the 2025 "Science of Closeness" campaign focused on R&D story with limited community angle.
+              </p>
             </div>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Unmet Needs</h4>
-            <ul className="space-y-1 text-sm text-foreground/80">
-              <li>• Trustworthy bridge between clinical recommendation and peer confirmation</li>
-              <li>• Transition guidance that feels medically endorsed AND emotionally supportive</li>
-              <li>• Nighttime/crisis-moment content that combines authority with empathy</li>
-            </ul>
           </section>
 
-          {/* Section 3: Market & Cultural Landscape */}
+          {/* THE DIRECTION */}
           <section>
-            <SectionTitle>Market & Cultural Landscape</SectionTitle>
-            <SourceLabel>Culture + Category + Connection · Internet Scouting (Tavily)</SourceLabel>
+            <SectionTitle>The Direction</SectionTitle>
+            <SourceLabel>Activation Direction Module (P8) · 5C synthesis</SourceLabel>
+            <div className="space-y-4 text-sm leading-relaxed text-foreground/85">
+              <div>
+                <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60">Communication Lead</p>
+                <p className="font-medium italic text-foreground/90">"Backed by science. Validated by moms like you."</p>
+              </div>
 
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Cultural Context</h4>
-            <ul className="mb-4 space-y-1 text-sm text-foreground/80">
-              <li>• <strong>Macro Trends:</strong> Rising "informed motherhood" movement in DACH — mothers expect scientific backing but reject paternalistic messaging. Growing influence of digital parenting communities.</li>
-              <li>• <strong>Cultural Tensions:</strong> Medical expertise is respected but increasingly questioned when it conflicts with lived peer experience. "Doctor says X but my baby…" is a recurring narrative pattern.</li>
-            </ul>
+              <div>
+                <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60">Key Scenarios</p>
+                <ul className="space-y-1">
+                  <li className="flex gap-2 text-foreground/80"><span>•</span>First pediatrician visit after birth — the moment clinical recommendation is given</li>
+                  <li className="flex gap-2 text-foreground/80"><span>•</span>Late-night forum browsing during feeding — the moment peer validation is sought</li>
+                  <li className="flex gap-2 text-foreground/80"><span>•</span>Formula aisle decision moment — where both trust layers converge</li>
+                  <li className="flex gap-2 text-foreground/80"><span>•</span>Post-hospital discharge first week — peak anxiety window</li>
+                </ul>
+              </div>
 
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Category Dynamics</h4>
-            <ul className="mb-4 space-y-1 text-sm text-foreground/80">
-              <li>• <strong>Competitive Landscape:</strong> HiPP dominates organic/natural positioning; Nestlé NAN leads clinical/medical messaging. No major brand owns the "bridge" between medical authority and peer trust.</li>
-              <li>• <strong>Category Trends:</strong> Shift from pure ingredient-led messaging to emotional reassurance. Rise of "science + community" as a positioning territory.</li>
-              <li>• <strong>Whitespace:</strong> No brand currently occupies "medically endorsed AND peer-validated" as a unified positioning.</li>
-            </ul>
+              <div>
+                <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60">Tone</p>
+                <p className="text-foreground/80">Reassuring, warm-scientific, not preachy. Acknowledge the mother's agency and intelligence. Never dismiss peer experience as inferior to medical advice — position them as complementary.</p>
+              </div>
 
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Connection Channels</h4>
-            <ul className="space-y-1 text-sm text-foreground/80">
-              <li>• <strong>Platform Presence:</strong> Highest engagement on parenting forums (Urbia.de, NetMoms), Instagram parenting accounts, and pediatrician-adjacent touchpoints.</li>
-              <li>• <strong>Content Formats:</strong> Long-form personal stories outperform product-led content 4:1. Video testimonials from real mothers drive highest trust scores.</li>
-              <li>• <strong>Influence Drivers:</strong> Pediatricians as primary trigger, peer mothers as validators, parenting influencers as amplifiers.</li>
-            </ul>
+              <div>
+                <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60">Rationale</p>
+                <p className="text-foreground/80">This direction leverages the core tension between medical authority and peer validation. No competitor currently occupies this positioning territory. Aptamil has strong existing assets on the clinical side (HCP network, research heritage) but no investment in the peer validation layer — bridging this gap creates a defensible position that neither HiPP (natural/organic) nor NAN (pure clinical) can easily replicate.</p>
+              </div>
+            </div>
           </section>
 
-          {/* Section 4: Brand Play */}
+          {/* SOURCES — collapsible */}
           <section>
-            <SectionTitle>Brand Play</SectionTitle>
-            <SourceLabel>Company C · Internet Scouting (public)</SourceLabel>
+            <SectionTitle>Sources</SectionTitle>
+            <button
+              onClick={() => setSourcesOpen(!sourcesOpen)}
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ChevronRight className={`h-4 w-4 transition-transform ${sourcesOpen ? "rotate-90" : ""}`} />
+              Sources (click to expand)
+            </button>
 
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Brand Positioning</h4>
-            <p className="mb-4 text-sm leading-relaxed text-foreground/80">
-              Aptamil positions itself as the science-led infant nutrition brand with "closest to breast milk" as its core claim. Strong R&D heritage (Milupa/Danone Research). Brand voice skews clinical-authoritative.
-            </p>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Leverageable Brand Assets</h4>
-            <ul className="mb-4 space-y-1 text-sm text-foreground/80">
-              <li>• Pronutra+ proprietary blend — scientific credibility anchor</li>
-              <li>• 50+ years of breast milk research heritage</li>
-              <li>• Existing HCP (Healthcare Professional) recommendation network</li>
-              <li>• "Inspired by breast milk science" tagline</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Recent Brand Activities</h4>
-            <ul className="space-y-1 text-sm text-foreground/80">
-              <li>• 2025 campaign: "Science of Closeness" — focused on R&D story, limited community angle</li>
-              <li>• HCP outreach program in Germany and Austria — active but not consumer-visible</li>
-              <li>• No active peer/community-building initiative in current brand portfolio</li>
-            </ul>
-          </section>
-
-          {/* Section 5: Activation Direction */}
-          <section>
-            <SectionTitle>Activation Direction</SectionTitle>
-            <SourceLabel>Activation Direction Module (P8) · 5C synthesis + Activation Seed</SourceLabel>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Selected Direction: "{directionTitle}"</h4>
-            <ul className="mb-4 space-y-1 text-sm text-foreground/70">
-              <li>• Priority: HIGH</li>
-              <li>• Confidence: HIGH</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Rationale</h4>
-            <p className="mb-4 text-sm leading-relaxed text-foreground/80">
-              Leverages the tension between medical authority and peer validation — no competitor currently owns this positioning territory. Consumer signals consistently show that trust in formula choice is a two-step process (clinical → peer), and Aptamil has existing assets on the clinical side but no investment in the peer validation layer.
-            </p>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Communication Lead</h4>
-            <p className="mb-4 text-sm italic text-foreground/80">"Backed by science. Validated by moms like you."</p>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Key Scenarios</h4>
-            <ul className="mb-4 space-y-1 text-sm text-foreground/80">
-              <li>• First pediatrician visit after birth — the moment clinical recommendation is given</li>
-              <li>• Late-night forum browsing during feeding — the moment peer validation is sought</li>
-              <li>• Formula aisle decision moment — where both trust layers converge</li>
-              <li>• Post-hospital discharge first week — peak anxiety window</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Tone Guidance</h4>
-            <p className="mb-4 text-sm text-foreground/80">
-              Reassuring, warm-scientific, not preachy. Acknowledge the mother's agency and intelligence. Never dismiss peer experience as inferior to medical advice — position them as complementary.
-            </p>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Supporting Insights</h4>
-            <p className="text-sm text-foreground/80">
-              Consumer + Culture + Category — this direction draws on the dual-trust dynamic (Consumer), the medical-vs-peer tension (Culture), and the positioning whitespace (Category).
-            </p>
-          </section>
-
-          {/* Section 6: Appendix / Sources */}
-          <section>
-            <SectionTitle>Appendix / Sources</SectionTitle>
-            <SourceLabel>All C source_references + Internet Scout logs</SourceLabel>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Consumer Sources</h4>
-            <ul className="mb-4 space-y-1 text-[13px] text-foreground/70">
-              <li>• Page 3 verification dataset (internal)</li>
-              <li>• Persona definition: "The Cautious First-Timer" (internal)</li>
-              <li>• Representative posts: 42 analyzed, 12 high-relevance</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Culture Sources</h4>
-            <ul className="mb-4 space-y-1 text-[13px] text-foreground/70">
-              <li>• "Digital Parenting in DACH 2025" — Statista</li>
-              <li>• "The Informed Mother: Trust Dynamics in German Parenting Communities" — ZHAW Zurich</li>
-              <li>• Urbia.de forum analysis (Tavily, retrieved Apr 2026)</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Category Sources</h4>
-            <ul className="mb-4 space-y-1 text-[13px] text-foreground/70">
-              <li>• "Infant Formula Market DACH 2025-2026" — Euromonitor</li>
-              <li>• HiPP, Nestlé NAN, Holle brand positioning analysis (Tavily, retrieved Apr 2026)</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Connection Sources</h4>
-            <ul className="mb-4 space-y-1 text-[13px] text-foreground/70">
-              <li>• NetMoms engagement data (Tavily, retrieved Apr 2026)</li>
-              <li>• Instagram #formulafeeding DACH geo-filtered analysis</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Company Sources</h4>
-            <ul className="mb-4 space-y-1 text-[13px] text-foreground/70">
-              <li>• Aptamil.de official site</li>
-              <li>• "Science of Closeness" campaign materials (public)</li>
-              <li>• Danone Annual Report 2025 — Early Life Nutrition segment</li>
-            </ul>
-
-            <h4 className="mb-1 text-[12px] font-semibold text-foreground">Search Queries Used</h4>
-            <ul className="space-y-1 text-[13px] text-muted-foreground/60 font-mono">
-              <li>• "infant formula trust mothers Germany 2025"</li>
-              <li>• "Säuglingsnahrung Vertrauen Mütter DACH"</li>
-              <li>• "Aptamil brand positioning pediatrician"</li>
-              <li>• "HiPP vs Aptamil market share Germany"</li>
-              <li>• "parenting forum formula recommendation Urbia NetMoms"</li>
-            </ul>
+            {sourcesOpen && (
+              <ul className="mt-4 space-y-2 text-[13px] text-foreground/70">
+                <li className="flex gap-2"><span>•</span><span><strong className="text-foreground/80">Consumer:</strong> Page 3 verification dataset; Persona "The Cautious First-Timer"; 42 posts analyzed, 12 high-relevance</span></li>
+                <li className="flex gap-2"><span>•</span><span><strong className="text-foreground/80">Culture:</strong> "Digital Parenting in DACH 2025" (Statista); "Trust Dynamics in German Parenting Communities" (ZHAW Zurich); Urbia.de forum analysis (Tavily, Apr 2026)</span></li>
+                <li className="flex gap-2"><span>•</span><span><strong className="text-foreground/80">Category:</strong> "Infant Formula Market DACH 2025-2026" (Euromonitor); HiPP, NAN, Holle positioning analysis (Tavily, Apr 2026)</span></li>
+                <li className="flex gap-2"><span>•</span><span><strong className="text-foreground/80">Connection:</strong> NetMoms engagement data (Tavily, Apr 2026); Instagram #formulafeeding DACH analysis</span></li>
+                <li className="flex gap-2"><span>•</span><span><strong className="text-foreground/80">Company:</strong> Aptamil.de; "Science of Closeness" campaign materials; Danone Annual Report 2025</span></li>
+              </ul>
+            )}
           </section>
         </div>
       </div>
