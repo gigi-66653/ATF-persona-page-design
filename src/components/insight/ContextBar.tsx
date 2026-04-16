@@ -4,6 +4,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Bookmark } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const ContextBar = () => {
   const hypothesis =
