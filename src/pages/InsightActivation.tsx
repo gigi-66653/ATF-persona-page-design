@@ -7,8 +7,9 @@ import FiveCAnalysis from "@/components/insight/FiveCAnalysis";
 import ActivationDirection from "@/components/insight/ActivationDirection";
 import InsightChatbot from "@/components/insight/InsightChatbot";
 import CreativeBriefPanel from "@/components/insight/CreativeBriefPanel";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft, Sparkles, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 type ActivePanel = "none" | "chatbot" | "brief";
 
