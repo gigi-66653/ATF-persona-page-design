@@ -304,35 +304,73 @@ const ValidationOutput = () => {
           </div>
         </section>
 
-        {/* ── 5. Unexpected Findings ── */}
+        {/* ── 5. Evidence Context ── */}
         <section className="mb-6 rounded-2xl border border-border/60 bg-card p-8 shadow-sm">
           <div className="mb-6 flex items-center gap-2.5">
-            <Lightbulb className="h-5 w-5 text-purple-500" />
+            <FileText className="h-5 w-5 text-primary" />
             <h2 className="font-serif text-lg font-semibold tracking-tight text-foreground">
-              Unexpected Findings
+              Evidence Context
             </h2>
           </div>
 
-          <div className="space-y-3">
-            {unexpectedFindings.map((f, i) => (
-              <div key={i} className="flex gap-3">
-                <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-purple-400/60" />
-                <p className="text-sm leading-relaxed text-foreground/80">{f}</p>
-              </div>
-            ))}
+          {/* Sufficiency */}
+          <div className="mb-5">
+            <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">Material Sufficiency</p>
+            <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500/10">{evidenceContext.sufficiency}</Badge>
+          </div>
+
+          {/* Coverage */}
+          <div className="mb-5">
+            <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">Coverage Description</p>
+            <p className="text-sm leading-relaxed text-foreground/85">{evidenceContext.coverage}</p>
+          </div>
+
+          {/* Representative Quotes */}
+          <div className="mb-5">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">Representative Quotes</p>
+            <div className="space-y-2.5">
+              {evidenceContext.quotes.map((q, i) => (
+                <div key={i} className={`border-l-2 py-2 pl-4 pr-3 rounded-r ${
+                  q.sentiment === "positive"
+                    ? "border-emerald-500/50 bg-emerald-500/5"
+                    : "border-destructive/50 bg-destructive/5"
+                }`}>
+                  <p className="font-serif text-[13px] italic leading-relaxed text-foreground/80">"{q.text}"</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Platform Distribution */}
+          <div className="mb-5">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">Platform Source Distribution</p>
+            <div className="space-y-2">
+              {evidenceContext.platformDistribution.map((p) => (
+                <div key={p.platform} className="flex items-center gap-3">
+                  <span className="w-28 text-[12px] font-medium text-foreground/80">{p.platform}</span>
+                  <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
+                    <div className="h-full rounded-full bg-primary/60" style={{ width: `${p.pct}%` }} />
+                  </div>
+                  <span className="w-10 text-right text-[12px] font-semibold text-foreground/70">{p.pct}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recency */}
+          <div>
+            <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">Sample Recency</p>
+            <p className="text-sm leading-relaxed text-foreground/85">{evidenceContext.recency}</p>
           </div>
         </section>
 
-        {/* ── 6. Hypothesis Refinement (Track A) ── */}
+        {/* ── 6. Hypothesis Refinement ── */}
         <section className="mb-6 rounded-2xl border border-border/60 bg-card p-8 shadow-sm">
           <div className="mb-6 flex items-center gap-2.5">
             <PenLine className="h-5 w-5 text-blue-500" />
             <h2 className="font-serif text-lg font-semibold tracking-tight text-foreground">
               Hypothesis Refinement
             </h2>
-            <Badge variant="secondary" className="ml-auto text-[10px] font-medium uppercase tracking-wider">
-              Track A
-            </Badge>
           </div>
 
           <div className="space-y-5">
@@ -345,36 +383,6 @@ const ValidationOutput = () => {
                   <h3 className="text-sm font-medium leading-snug text-foreground">{h.title}</h3>
                 </div>
                 <p className="ml-9 text-[13px] leading-relaxed text-muted-foreground">{h.explanation}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── 7. Campaign Recommendations (Track B) ── */}
-        <section className="mb-6 rounded-2xl border border-border/60 bg-card p-8 shadow-sm">
-          <div className="mb-6 flex items-center gap-2.5">
-            <Send className="h-5 w-5 text-rose-500" />
-            <h2 className="font-serif text-lg font-semibold tracking-tight text-foreground">
-              Campaign Recommendations
-            </h2>
-            <Badge variant="secondary" className="ml-auto text-[10px] font-medium uppercase tracking-wider">
-              Track B
-            </Badge>
-          </div>
-
-          <div className="space-y-4">
-            {campaignRecs.map((r, i) => (
-              <div key={i} className="rounded-lg border border-border/40 p-5">
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-foreground">{r.title}</h3>
-                  <Badge
-                    variant={r.priority === "High" ? "destructive" : "secondary"}
-                    className="text-[10px]"
-                  >
-                    Priority: {r.priority}
-                  </Badge>
-                </div>
-                <p className="text-[13px] leading-relaxed text-muted-foreground">{r.evidence}</p>
               </div>
             ))}
           </div>
