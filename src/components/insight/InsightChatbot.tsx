@@ -8,6 +8,11 @@ interface Message {
   text: string;
 }
 
+interface InsightChatbotProps {
+  open: boolean;
+  onToggle: (open: boolean) => void;
+}
+
 const welcomeMessage = `Hi! I can help you explore the analysis results. Try asking me about:
 
 • A specific C dimension — "Tell me more about Cultural Tensions"
@@ -35,8 +40,7 @@ const quickActions = [
   "Compare Direction 1 and Direction 2",
 ];
 
-const InsightChatbot = () => {
-  const [open, setOpen] = useState(false);
+const InsightChatbot = ({ open, onToggle }: InsightChatbotProps) => {
   const [messages, setMessages] = useState<Message[]>([
     { role: "bot", text: welcomeMessage },
   ]);
@@ -62,7 +66,7 @@ const InsightChatbot = () => {
       {/* FAB */}
       {!open && (
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => onToggle(true)}
           className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
         >
           <MessageCircle className="h-6 w-6" />
@@ -70,78 +74,83 @@ const InsightChatbot = () => {
       )}
 
       {/* Panel */}
-      {open && (
-        <>
-          {/* Backdrop (mobile) */}
-          <div className="fixed inset-0 z-40 bg-black/20 md:hidden" onClick={() => setOpen(false)} />
+      <div
+        className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-[420px] flex-col border-l border-border bg-card shadow-xl transition-transform duration-300 ease-in-out ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Backdrop (mobile) */}
+        {open && (
+          <div className="fixed inset-0 -z-10 bg-black/20 md:hidden" onClick={() => onToggle(false)} />
+        )}
 
-          <div className="fixed right-0 top-0 z-50 flex h-full w-full max-w-[420px] flex-col border-l border-border bg-card shadow-xl animate-in slide-in-from-right duration-300">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-border/60 px-5 py-4">
-              <h3 className="text-sm font-semibold text-primary">Insight Assistant</h3>
-              <button onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground">
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-              {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                  <div
-                    className={`max-w-[85%] rounded-xl px-4 py-3 text-[13px] leading-relaxed whitespace-pre-line ${
-                      m.role === "user"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted/50 text-foreground/85"
-                    }`}
-                  >
-                    {m.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Quick Actions */}
-            <div className="border-t border-border/40 px-5 py-3">
-              <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
-                Quick Actions
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {quickActions.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => sendMessage(q)}
-                    className="rounded-full border border-primary/30 px-3 py-1 text-[11px] text-primary transition-colors hover:bg-primary/10"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Input */}
-            <div className="border-t border-border/60 px-4 py-3">
-              <div className="flex gap-2">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      sendMessage(input);
-                    }
-                  }}
-                  placeholder="Ask about the analysis..."
-                  className="h-10 flex-1 text-sm"
-                />
-                <Button size="icon" className="h-10 w-10 shrink-0" onClick={() => sendMessage(input)}>
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-border/60 px-5 py-4">
+          <div className="flex items-center gap-2">
+            <MessageCircle className="h-4 w-4 text-primary" />
+            <h3 className="text-sm font-semibold text-primary">Insight Assistant</h3>
           </div>
-        </>
-      )}
+          <button onClick={() => onToggle(false)} className="text-muted-foreground hover:text-foreground">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+          {messages.map((m, i) => (
+            <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                className={`max-w-[85%] rounded-xl px-4 py-3 text-[13px] leading-relaxed whitespace-pre-line ${
+                  m.role === "user"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted/50 text-foreground/85"
+                }`}
+              >
+                {m.text}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Quick Actions */}
+        <div className="border-t border-border/40 px-5 py-3">
+          <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
+            Quick Actions
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {quickActions.map((q) => (
+              <button
+                key={q}
+                onClick={() => sendMessage(q)}
+                className="rounded-full border border-primary/30 px-3 py-1 text-[11px] text-primary transition-colors hover:bg-primary/10"
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Input */}
+        <div className="border-t border-border/60 px-4 py-3">
+          <div className="flex gap-2">
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  sendMessage(input);
+                }
+              }}
+              placeholder="Ask about the analysis..."
+              className="h-10 flex-1 text-sm"
+            />
+            <Button size="icon" className="h-10 w-10 shrink-0" onClick={() => sendMessage(input)}>
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
