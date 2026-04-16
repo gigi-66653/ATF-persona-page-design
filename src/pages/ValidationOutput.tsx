@@ -45,11 +45,24 @@ const counterfactuals = [
   "Switching from 'organic' to 'clinically tested' framing reverses ingredient-trust priority ranking.",
 ];
 
-const unexpectedFindings = [
-  "Anxious mothers show higher trust in unfamiliar brands when packaging includes QR-linked lab reports.",
-  "Formula milk origin matters less than expected when the retailer brand is strong (e.g. flagship stores).",
-  "Night-time browsing sessions (22:00–01:00) correlate with 2.3× higher engagement on safety-related content.",
-];
+const evidenceContext = {
+  sufficiency: "Sufficient",
+  coverage: "Sample covers parenting stages 0–6M (62%) and 6–12M (38%); feeding modality split: breast-to-formula transition (71%), formula-only (29%).",
+  quotes: [
+    { text: "I always check where the milk powder comes from — if it's from a trusted European source, I feel safer.", sentiment: "positive" },
+    { text: "The ingredient list looked clean but I couldn't find any third-party lab reports, which made me hesitate.", sentiment: "negative" },
+    { text: "My pediatrician recommended this brand and the forums confirmed it — that's what convinced me.", sentiment: "positive" },
+    { text: "Too expensive for what it is. I switched to a cheaper organic brand and saw no difference.", sentiment: "negative" },
+  ],
+  platformDistribution: [
+    { platform: "Netmoms.de", pct: 38 },
+    { platform: "Urbia.de", pct: 27 },
+    { platform: "Instagram", pct: 18 },
+    { platform: "Babycenter.de", pct: 12 },
+    { platform: "Other", pct: 5 },
+  ],
+  recency: "78% of matched posts are from the last 90 days. Recent coverage is sufficient for trend analysis.",
+};
 
 const refinedHypotheses = [
   {
