@@ -74,8 +74,8 @@ const ConsumerContent = () => (
     <div>
       <FieldLabel>Consumer Voices</FieldLabel>
       <div className="space-y-3">
-        <QuoteBlock text=""I always ask my pediatrician first, but then I go to the forum to see what other moms actually experienced..."" />
-        <QuoteBlock text=""I know what the doctor says, but hearing from a mom who's been through it just hits different."" />
+        <QuoteBlock text="I always ask my pediatrician first, but then I go to the forum to see what other moms actually experienced..." />
+        <QuoteBlock text="I know what the doctor says, but hearing from a mom who's been through it just hits different." />
       </div>
     </div>
     <div>
