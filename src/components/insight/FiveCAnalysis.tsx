@@ -511,7 +511,7 @@ export const buildInitialInsightState = (): InsightStateMap => {
   return state;
 };
 
-const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange }: FiveCAnalysisProps) => {
+const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange, showGuides = true }: FiveCAnalysisProps) => {
   const [activeTab, setActiveTab] = useState<TabKey>("consumer");
 
   const stats = computeStats(insightState);
@@ -533,9 +533,19 @@ const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange }: Fi
 
   return (
     <section className="mb-8">
-      <h2 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-foreground">
+      <h2 className="mb-4 font-serif text-2xl font-semibold tracking-tight text-foreground">
         5C Analysis
       </h2>
+
+      {/* Guidance banner */}
+      {showGuides && (
+        <div className="mb-5 flex items-start gap-2.5 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+          <p className="text-[13px] leading-relaxed text-foreground/80">
+            Review the insights below. Reject any you find inaccurate or irrelevant — only approved insights will be used to generate your Activation Directions.
+          </p>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="mb-0 flex border-b border-border/60">
@@ -573,7 +583,7 @@ const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange }: Fi
       {/* Content */}
       <div className="rounded-b-2xl border border-t-0 border-border/60 bg-card p-8 shadow-sm">
         {activeTab === "consumer" ? (
-          <ConsumerContent />
+          <ConsumerContent showFooterNote={showGuides} />
         ) : (
           <ValidatedTabContent
             tabKey={activeTab as ValidatedTabKey}
