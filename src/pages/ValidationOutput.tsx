@@ -44,13 +44,16 @@ const counterfactuals = [
 ];
 
 const evidenceContext = {
-  sufficiency: "Sufficient",
+  sufficiency: {
+    hitCount: 47,
+    totalCount: 112,
+  },
   coverage: "Sample covers parenting stages 0–6M (62%) and 6–12M (38%); feeding modality split: breast-to-formula transition (71%), formula-only (29%).",
   quotes: [
-    { text: "I always check where the milk powder comes from — if it's from a trusted European source, I feel safer.", sentiment: "positive" },
-    { text: "The ingredient list looked clean but I couldn't find any third-party lab reports, which made me hesitate.", sentiment: "negative" },
-    { text: "My pediatrician recommended this brand and the forums confirmed it — that's what convinced me.", sentiment: "positive" },
-    { text: "Too expensive for what it is. I switched to a cheaper organic brand and saw no difference.", sentiment: "negative" },
+    { text: "I always check where the milk powder comes from — if it's from a trusted European source, I feel safer.", sentiment: "positive", confidence: 0.92 },
+    { text: "My pediatrician recommended this brand and the forums confirmed it — that's what convinced me.", sentiment: "positive", confidence: 0.87 },
+    { text: "The ingredient list looked clean but I couldn't find any third-party lab reports, which made me hesitate.", sentiment: "negative", confidence: 0.84 },
+    { text: "Too expensive for what it is. I switched to a cheaper organic brand and saw no difference.", sentiment: "negative", confidence: 0.79 },
   ],
   platformDistribution: [
     { platform: "Netmoms.de", pct: 38 },
