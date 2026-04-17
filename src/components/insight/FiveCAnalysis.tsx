@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Lightbulb, ChevronDown, ChevronUp, Check, X, AlertTriangle } from "lucide-react";
+import { Lightbulb, ChevronDown, ChevronUp, Check, X, AlertTriangle, Info, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ── Types ── */
