@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Lightbulb, ChevronDown, ChevronUp, Check, X, AlertTriangle } from "lucide-react";
+import { Lightbulb, ChevronDown, ChevronUp, Check, X, AlertTriangle, Info, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ── Types ── */
@@ -31,6 +31,7 @@ interface FiveCAnalysisProps {
   insightState: InsightStateMap;
   onInsightStateChange: (next: InsightStateMap) => void;
   onStatsChange?: (stats: ApprovalStats) => void;
+  showGuides?: boolean;
 }
 
 /* ── Field label ── */
@@ -384,7 +385,7 @@ const tabs = [
 ] as const;
 
 /* ── Consumer (no validation) ── */
-const ConsumerContent = () => (
+const ConsumerContent = ({ showFooterNote }: { showFooterNote: boolean }) => (
   <div className="space-y-6">
     <div>
       <FieldLabel>Persona Snapshot</FieldLabel>
@@ -420,6 +421,16 @@ const ConsumerContent = () => (
         <li className="flex gap-2"><Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />Desire for formula transition guidance that feels medically endorsed but emotionally supportive</li>
       </ul>
     </div>
+
+    {showFooterNote && (
+      <div className="mt-8 flex items-start gap-2.5 rounded-lg border border-border/50 bg-muted/40 px-4 py-3">
+        <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+        <p className="text-[13px] leading-relaxed text-muted-foreground">
+          The Consumer dimension is based on your verified data and does not require review.
+          Please review the other 4 dimensions (Culture, Category, Connection, Company) which are based on internet research.
+        </p>
+      </div>
+    )}
   </div>
 );
 
@@ -500,7 +511,7 @@ export const buildInitialInsightState = (): InsightStateMap => {
   return state;
 };
 
-const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange }: FiveCAnalysisProps) => {
+const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange, showGuides = true }: FiveCAnalysisProps) => {
   const [activeTab, setActiveTab] = useState<TabKey>("consumer");
 
   const stats = computeStats(insightState);
@@ -522,9 +533,19 @@ const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange }: Fi
 
   return (
     <section className="mb-8">
-      <h2 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-foreground">
+      <h2 className="mb-4 font-serif text-2xl font-semibold tracking-tight text-foreground">
         5C Analysis
       </h2>
+
+      {/* Guidance banner */}
+      {showGuides && (
+        <div className="mb-5 flex items-start gap-2.5 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+          <p className="text-[13px] leading-relaxed text-foreground/80">
+            Review the insights below. Reject any you find inaccurate or irrelevant — only approved insights will be used to generate your Activation Directions.
+          </p>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="mb-0 flex border-b border-border/60">
@@ -562,7 +583,7 @@ const FiveCAnalysis = ({ insightState, onInsightStateChange, onStatsChange }: Fi
       {/* Content */}
       <div className="rounded-b-2xl border border-t-0 border-border/60 bg-card p-8 shadow-sm">
         {activeTab === "consumer" ? (
-          <ConsumerContent />
+          <ConsumerContent showFooterNote={showGuides} />
         ) : (
           <ValidatedTabContent
             tabKey={activeTab as ValidatedTabKey}
