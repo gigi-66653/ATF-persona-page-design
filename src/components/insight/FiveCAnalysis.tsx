@@ -31,6 +31,7 @@ interface FiveCAnalysisProps {
   insightState: InsightStateMap;
   onInsightStateChange: (next: InsightStateMap) => void;
   onStatsChange?: (stats: ApprovalStats) => void;
+  showGuides?: boolean;
 }
 
 /* ── Field label ── */
